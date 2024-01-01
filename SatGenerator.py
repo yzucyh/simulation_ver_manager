@@ -1,23 +1,16 @@
-from NetworkSettings import NetworkSettings
+from NetworkSettings import NetworkSettings, SystemInfo
+from EventManager import Event
 import os
 import csv
 import math
 import time
 
 class SatGenerator:
-    def __init__(self,event_manager, from_time):
+    def __init__(self, event_manager, from_time):
         self.event_manager = event_manager
         self.ini_sat_pos(from_time)
-
-    def ini_sat_pos(self, from_time):
-        event = {
-            "priority": 1,
-            "event_target": "sat_group",
-            "event_name": "initial",
-            "event_trigger_time": 1,
-            "event_details": {}
-        }
         
+    def ini_sat_pos(self, from_time):
         for orbit_num in range(1, NetworkSettings.num_of_sat_orbit+1):
             orbit_file_dir = './data/satellite/Orbit_'+str(orbit_num)
             orbit_file_list = []
@@ -43,13 +36,19 @@ class SatGenerator:
                     orbit_with_sat = "{}-{}".format(orbit_num, sat_index)
                     coverage = self.compute_coverage(ini_lat, ini_long)
 
-                    NetworkSettings.sat_id_list.append({orbit_with_sat: {'coordinate':(ini_lat, ini_long), 'coverage': coverage}})
+                    sat_obj = Satellite(orbit_with_sat, (ini_lat, ini_long), coverage)
+
+                    NetworkSettings.sat_id_list.append(orbit_with_sat)
+                    NetworkSettings.object_info_dict[orbit_with_sat] = sat_obj
                     csvfile.close()
                 sat_index = sat_index + 1
-        self.event_manager.add_new_event(event['event_trigger_time'], event['priority'], event)
-            
-    def update_sat_pos(self, event_manager):
-        pass
+
+        self.update_sat_pos()
+
+    def update_sat_pos(self):
+        for j in range(1, 5):
+            new = Event(j, 1, "Initial satellite")
+            self.event_manager.add_new_event(new)
 
     def compute_coverage(self, lat, long):
         R = 6373 * 1000 # 單位: m
@@ -75,3 +74,18 @@ class SatGenerator:
 
             coverage.append((lat2, lon2))
         return coverage
+
+class Satellite:
+    def __init__(self, number, pos, coverage):
+        self.next = None
+        self.number = number
+        self.pos = pos
+        self.coverage = coverage
+        self.used = 0
+        self.freq = 28
+        self.bandwidth = 500
+        self.tx_gain = 10
+        self.rx_gain = 10
+        self.numChannel = 100
+        self.ISL_link = 2
+        self.ISL_state = {0, 1}

@@ -1,10 +1,10 @@
 class NetworkSettings:
-    num_of_ue = 2
-    num_of_sat_orbit = 1
+    num_of_sat_orbit = 2
 
-    time_interval = 1000
+    simulation_time = 1000
+    time_interval = 10
 
-    ue_id_list = list()
+    agent_id_list = list()
     sat_id_list = list()
     gw_id_list = list()
 
