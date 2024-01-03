@@ -30,41 +30,55 @@
 #     item = pq.get()
 #     print(item)
 
-import heapq
+# import heapq
 
-class Event:
-    def __init__(self, time, priority, description):
-        self.time = time
-        self.priority = priority
-        self.description = description
+# class Event:
+#     def __init__(self, time, priority, description):
+#         self.time = time
+#         self.priority = priority
+#         self.description = description
 
-    def __lt__(self, other):
+#     def __lt__(self, other):
 
-        if self.time == other.time:
-            return self.priority < other.priority
-        return self.time < other.time
+#         if self.time == other.time:
+#             return self.priority < other.priority
+#         return self.time < other.time
 
-class EventManager:
-    def __init__(self):
-        self.event_queue = []
+# class EventManager:
+#     def __init__(self):
+#         self.event_queue = []
 
-    def add_event(self, event):
-        heapq.heappush(self.event_queue, event)
+#     def add_event(self, event):
+#         heapq.heappush(self.event_queue, event)
 
-    def process_events(self):
-        while self.event_queue:
-            event = heapq.heappop(self.event_queue)
-            self.handle_event(event)
+#     def process_events(self):
+#         while self.event_queue:
+#             event = heapq.heappop(self.event_queue)
+#             self.handle_event(event)
 
-    def handle_event(self, event):
-        print(f"Processing event at time {event.time}, priority {event.priority}: {event.description}")
+#     def handle_event(self, event):
+#         print(f"Processing event at time {event.time}, priority {event.priority}: {event.description}")
 
 
-event_manager = EventManager()
+# event_manager = EventManager()
 
-event_manager.add_event(Event(2, 1, "Event 1"))
-event_manager.add_event(Event(1, 2, "Event 2"))
-event_manager.add_event(Event(2, 3, "Event 3"))
+# event_manager.add_event(Event(2, 1, "Event 1"))
+# event_manager.add_event(Event(1, 2, "Event 2"))
+# event_manager.add_event(Event(2, 3, "Event 3"))
 
-# 处理事件
-event_manager.process_events()
+# # 处理事件
+# event_manager.process_events()
+
+from geopy.distance import geodesic
+import math
+
+R = 6373.0
+H = 610
+Airplane_H = 10
+diff_H = H - Airplane_H
+
+distance = geodesic((40.78685228568627, -106.39727493333334), (40, -106)).kilometers                    
+result = math.atan(diff_H/distance)
+if result != 0:
+    result = result*180/math.pi
+print(result)

@@ -11,7 +11,7 @@ class Event:
         if self.time == other.time:
             return self.priority < other.priority
         return self.time < other.time
-   
+    
 class EventManager:
     def __init__(self):
         self.event_list = []
@@ -26,7 +26,7 @@ class EventManager:
 
     def add_new_event(self, event):
         heapq.heappush(self.event_list, event)
-        print("EventManager: insert event ", event)
+        # print("EventManager: insert event", event.description)
 
     def process_events(self):
         while self.event_list:
@@ -34,4 +34,5 @@ class EventManager:
             self.handle_event(event)
     
     def handle_event(self, event):
-        print(f"Processing event at time {event.time}: {event.description}")
+        # print(f"Processing event at time {event.time}: {event.description}")
+        pass

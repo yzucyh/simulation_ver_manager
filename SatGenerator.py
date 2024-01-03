@@ -43,11 +43,14 @@ class SatGenerator:
                     csvfile.close()
                 sat_index = sat_index + 1
 
+        new = Event(0, 0, "Initial all satellite")
+        self.event_manager.add_new_event(new)
+        
         self.update_sat_pos()
 
     def update_sat_pos(self):
-        for j in range(1, 5):
-            new = Event(j, 1, "Initial satellite")
+        for j in range(1, NetworkSettings.simulation_time, NetworkSettings.time_interval):
+            new = Event(j, 0, "update all satellite")
             self.event_manager.add_new_event(new)
 
     def compute_coverage(self, lat, long):
