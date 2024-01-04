@@ -26,6 +26,7 @@ class EventManager:
 
     def add_new_event(self, event):
         heapq.heappush(self.event_list, event)
+        SystemInfo.system_time = SystemInfo.system_time + 1
         # print("EventManager: insert event", event.description)
 
     def process_events(self):
@@ -34,5 +35,5 @@ class EventManager:
             self.handle_event(event)
     
     def handle_event(self, event):
-        # print(f"Processing event at time {event.time}: {event.description}")
+        print(f"Processing event at time {event.time}: {event.description}")
         pass

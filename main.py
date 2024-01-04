@@ -18,7 +18,7 @@ def main():
     # print(NetworkSettings.agent_id_list) # ok
 
     event_manager.process_events()
-    print(NetworkSettings.object_info_dict)
+    
 
 if __name__ == '__main__':
     main()

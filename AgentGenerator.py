@@ -22,7 +22,7 @@ class AgentHandover:
         self.event_manager = event_manager
 
     def handover(self):
-        new = Event(NetworkSettings.simulation_time, 2, "handover")
+        new = Event(SystemInfo.system_time, 2, "handover")
         self.event_manager.add_new_event(new)
 
 class UpdateAgent:
@@ -38,6 +38,8 @@ class UpdateAgent:
         self.update_agent_pos()
         self.find_candidate_sat()
         self.decide_host_sat()
+        
+        AgentHandover(self.event_manager).handover()
 
     def update_agent_pos(self):
         for id in NetworkSettings.agent_id_list:

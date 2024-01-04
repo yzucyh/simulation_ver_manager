@@ -3,7 +3,7 @@ class NetworkSettings:
     from_time = int
     num_of_sat_orbit = 4
 
-    simulation_time = 1002
+    simulation_time = 102
     time_interval = 10
 
     agent_id_list = list()
